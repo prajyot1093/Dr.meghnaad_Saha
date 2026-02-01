@@ -30,6 +30,18 @@ router.put('/requests/:id/status', verifyToken, verifyAdmin, async (req, res) =>
 
     // In production, update in Firestore
     
+    // Emit real-time event to notify student
+    const io = req.app.locals.io
+    if (io) {
+      io.emit('status-changed', {
+        id,
+        status,
+        notes,
+        updatedAt: new Date(),
+        updatedBy: req.user.email
+      })
+    }
+    
     res.json({
       success: true,
       message: 'Request status updated successfully'

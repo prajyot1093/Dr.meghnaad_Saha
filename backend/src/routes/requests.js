@@ -44,10 +44,24 @@ router.post('/create', verifyToken, async (req, res) => {
     //   updatedAt: new Date()
     // })
 
+    const ticketId = `#TKT-${Date.now()}`
+    
+    // Emit real-time event to all connected clients
+    const io = req.app.locals.io
+    if (io) {
+      io.emit('new-request', {
+        ticketId,
+        title,
+        serviceType,
+        userId,
+        createdAt: new Date()
+      })
+    }
+
     res.json({
       success: true,
       message: 'Request created successfully',
-      ticketId: `#TKT-${Date.now()}`
+      ticketId
     })
   } catch (error) {
     res.status(500).json({ error: error.message })
@@ -77,6 +91,16 @@ router.put('/:id', verifyToken, async (req, res) => {
 
     // In production, update in Firestore
     
+    // Emit real-time event
+    const io = req.app.locals.io
+    if (io) {
+      io.emit('request-updated', {
+        id,
+        ...updates,
+        updatedAt: new Date()
+      })
+    }
+    
     res.json({
       success: true,
       message: 'Request updated successfully'
@@ -84,6 +108,6 @@ router.put('/:id', verifyToken, async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-})
+}
 
 export default router

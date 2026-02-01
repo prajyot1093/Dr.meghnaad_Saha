@@ -1,9 +1,27 @@
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext'
+import { subscribeToStatusChange, subscribeToNewNotification } from '../../services/socketService'
 
 export default function Dashboard() {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
+
+  useEffect(() => {
+    // Subscribe to real-time status changes
+    const unsubscribeStatus = subscribeToStatusChange((data) => {
+      console.log('Request status changed:', data)
+    })
+
+    const unsubscribeNotification = subscribeToNewNotification((data) => {
+      console.log('New notification:', data)
+    })
+
+    return () => {
+      unsubscribeStatus()
+      unsubscribeNotification()
+    }
+  }, [])
 
   return (
     <div className="app-container">
