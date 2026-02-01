@@ -1,0 +1,53 @@
+// Mock data for testing
+export const serviceTypes = [
+  { id: 'course-reg', name: 'Course Registration', description: 'Register for courses' },
+  { id: 'transcript', name: 'Transcript Request', description: 'Request official transcript' },
+  { id: 'admission', name: 'Admission Inquiry', description: 'General admission questions' },
+  { id: 'fee-waiver', name: 'Fee Waiver Request', description: 'Request fee waiver/discount' },
+  { id: 'document', name: 'Document Request', description: 'Request official documents' },
+  { id: 'hostel', name: 'Hostel Application', description: 'Apply for hostel accommodation' },
+  { id: 'scholarship', name: 'Scholarship Status', description: 'Check scholarship details' },
+  { id: 'grievance', name: 'Grievance Registration', description: 'Lodge a complaint or grievance' },
+]
+
+export const mockRequests = [
+  {
+    id: 'REQ-001',
+    ticketId: '#TKT-2601-001',
+    title: 'Course Registration Spring 2026',
+    serviceType: 'course-reg',
+    description: 'Need to register for Spring 2026 courses',
+    status: 'in-progress',
+    priority: 'high',
+    createdAt: new Date(2026, 0, 28),
+    updatedAt: new Date(2026, 0, 29),
+    dueDate: new Date(2026, 1, 15),
+    createdBy: 'current-user',
+  },
+  {
+    id: 'REQ-002',
+    ticketId: '#TKT-2601-002',
+    title: 'Official Transcript Request',
+    serviceType: 'transcript',
+    description: 'Need official transcript for job application',
+    status: 'pending',
+    priority: 'medium',
+    createdAt: new Date(2026, 0, 25),
+    updatedAt: new Date(2026, 0, 25),
+    dueDate: new Date(2026, 1, 10),
+    createdBy: 'current-user',
+  },
+  {
+    id: 'REQ-003',
+    ticketId: '#TKT-2601-003',
+    title: 'Fee Waiver Submission',
+    serviceType: 'fee-waiver',
+    description: 'Submit fee waiver application',
+    status: 'completed',
+    priority: 'high',
+    createdAt: new Date(2026, 0, 15),
+    updatedAt: new Date(2026, 0, 20),
+    dueDate: new Date(2026, 1, 5),
+    createdBy: 'current-user',
+  },
+]

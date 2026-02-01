@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 export default function Dashboard() {
+  const navigate = useNavigate()
   const { user, logout } = useAuth()
 
   return (
@@ -35,9 +37,17 @@ export default function Dashboard() {
       </nav>
 
       <main className="main-content">
-        <div className="page-header">
-          <h1 className="greeting">Welcome back, {user?.displayName || 'Student'}!</h1>
-          <p className="greeting-sub">Here's what's happening with your requests today</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem' }}>
+          <div className="page-header">
+            <h1 className="greeting">Welcome back, {user?.displayName || 'Student'}!</h1>
+            <p className="greeting-sub">Here's what's happening with your requests today</p>
+          </div>
+          <button
+            className="btn btn-primary"
+            onClick={() => navigate('/student/create-request')}
+          >
+            + New Request
+          </button>
         </div>
 
         <div className="stats-grid">
@@ -66,6 +76,13 @@ export default function Dashboard() {
         <div className="card">
           <div className="card-header">
             <h2 className="card-title">Recent Requests</h2>
+            <button
+              className="btn btn-outline"
+              onClick={() => navigate('/student/requests')}
+              style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
+            >
+              View All
+            </button>
           </div>
           <div className="table-container">
             <table>
@@ -84,14 +101,14 @@ export default function Dashboard() {
                   <td>Course Registration</td>
                   <td><span style={{ color: 'var(--warning)' }}>In Progress</span></td>
                   <td>Jan 28, 2026</td>
-                  <td><a href="#">View</a></td>
+                  <td><a href="#" style={{ cursor: 'pointer' }}>View</a></td>
                 </tr>
                 <tr>
                   <td>#REQ-002</td>
                   <td>Transcript Request</td>
                   <td><span style={{ color: 'var(--primary)' }}>Pending</span></td>
                   <td>Jan 25, 2026</td>
-                  <td><a href="#">View</a></td>
+                  <td><a href="#" style={{ cursor: 'pointer' }}>View</a></td>
                 </tr>
               </tbody>
             </table>
