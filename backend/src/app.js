@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import requestRoutes from './routes/requests.js'
 import adminRoutes from './routes/admin.js'
+import notificationRoutes from './routes/notifications.js'
 
 // Load environment variables
 dotenv.config()
@@ -32,6 +33,7 @@ app.get('/api/health', (req, res) => {
 // API Routes
 app.use('/api/requests', requestRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/notifications', notificationRoutes)
 
 // Error handling middleware
 app.use((err, req, res, next) => {
