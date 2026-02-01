@@ -5,6 +5,8 @@ import morgan from 'morgan'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import requestRoutes from './routes/requests.js'
+import adminRoutes from './routes/admin.js'
 
 // Load environment variables
 dotenv.config()
@@ -27,10 +29,9 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
 
-// API Routes (to be implemented)
-// app.use('/api/auth', authRoutes)
-// app.use('/api/requests', requestRoutes)
-// app.use('/api/admin', adminRoutes)
+// API Routes
+app.use('/api/requests', requestRoutes)
+app.use('/api/admin', adminRoutes)
 
 // Error handling middleware
 app.use((err, req, res, next) => {
