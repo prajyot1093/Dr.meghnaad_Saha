@@ -1,0 +1,33 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "nixpacks",
+    "watchPatterns": ["src/**/*.js", "package.json"],
+    "buildCommand": "npm ci && npm run build"
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 3,
+    "startCommand": "node server.js",
+    "dockerfile": "Dockerfile",
+    "registryCredential": "docker-registry"
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "5000",
+    "FIREBASE_PROJECT_ID": {
+      "description": "Firebase Project ID",
+      "value": ""
+    },
+    "CORS_ORIGIN": {
+      "description": "Frontend origin URL",
+      "value": "https://unified-service-portal.vercel.app"
+    }
+  },
+  "plugins": [
+    {
+      "source": "https://github.com/railwayapp/starters/tree/main/plugins/nodejs"
+    }
+  ]
+}
