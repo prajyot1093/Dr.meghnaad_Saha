@@ -12,6 +12,7 @@ import Courses from '../pages/student/Courses'
 import Payments from '../pages/student/Payments'
 import Electives from '../pages/student/Electives'
 import Notifications from '../pages/student/Notifications'
+import Feedback from '../pages/student/Feedback'
 import AdminRequests from '../pages/admin/AllRequests'
 import AdminRequestDetails from '../pages/admin/RequestDetails'
 import AdminUsers from '../pages/admin/Users'
@@ -125,6 +126,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <AdminRequests />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/student/feedback',
+    element: (
+      <ProtectedRoute>
+        <Feedback />
       </ProtectedRoute>
     ),
   },
