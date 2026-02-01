@@ -7,6 +7,10 @@ import AdminDashboard from '../pages/admin/Dashboard'
 import CreateRequest from '../pages/student/CreateRequest'
 import MyRequests from '../pages/student/MyRequests'
 import RequestDetails from '../pages/student/RequestDetails'
+import Profile from '../pages/student/Profile'
+import Courses from '../pages/student/Courses'
+import Payments from '../pages/student/Payments'
+import Electives from '../pages/student/Electives'
 import AdminRequests from '../pages/admin/AllRequests'
 import AdminRequestDetails from '../pages/admin/RequestDetails'
 
@@ -61,6 +65,38 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <RequestDetails />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/student/profile',
+    element: (
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/student/courses',
+    element: (
+      <ProtectedRoute>
+        <Courses />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/student/payments',
+    element: (
+      <ProtectedRoute>
+        <Payments />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/student/electives',
+    element: (
+      <ProtectedRoute>
+        <Electives />
       </ProtectedRoute>
     ),
   },
