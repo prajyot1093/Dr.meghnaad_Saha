@@ -7,6 +7,8 @@ import AdminDashboard from '../pages/admin/Dashboard'
 import CreateRequest from '../pages/student/CreateRequest'
 import MyRequests from '../pages/student/MyRequests'
 import RequestDetails from '../pages/student/RequestDetails'
+import AdminRequests from '../pages/admin/AllRequests'
+import AdminRequestDetails from '../pages/admin/RequestDetails'
 
 // Protected Route Component
 function ProtectedRoute({ children, requiredRole = null }) {
@@ -67,6 +69,22 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <AdminDashboard />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/admin/requests',
+    element: (
+      <ProtectedRoute>
+        <AdminRequests />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/admin/request-details/:id',
+    element: (
+      <ProtectedRoute>
+        <AdminRequestDetails />
       </ProtectedRoute>
     ),
   },

@@ -1,7 +1,17 @@
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import { mockRequests } from '../../services/mockData'
 
 export default function AdminDashboard() {
+  const navigate = useNavigate()
   const { user, logout } = useAuth()
+
+  // Get requests from localStorage
+  const allRequests = JSON.parse(localStorage.getItem('service-requests') || JSON.stringify(mockRequests))
+  const pendingCount = allRequests.filter(r => r.status === 'pending').length
+  const inProgressCount = allRequests.filter(r => r.status === 'in-progress').length
+  const completedCount = allRequests.filter(r => r.status === 'completed').length
+  const totalCount = allRequests.length
 
   return (
     <div className="app-container">
@@ -43,36 +53,43 @@ export default function AdminDashboard() {
         <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-label">Total Requests</div>
-            <div className="stat-value">1,234</div>
-            <div className="stat-change positive">↑ 12% this week</div>
+            <div className="stat-value">{totalCount}</div>
+            <div className="stat-change positive">All time</div>
           </div>
           <div className="stat-card">
             <div className="stat-label">Pending</div>
-            <div className="stat-value">87</div>
-            <div className="stat-change">Requires action</div>
+            <div className="stat-value">{pendingCount}</div>
+            <div className="stat-change">{pendingCount > 0 ? 'Requires action' : 'None'}</div>
           </div>
           <div className="stat-card">
             <div className="stat-label">In Progress</div>
-            <div className="stat-value">45</div>
-            <div className="stat-change positive">On schedule</div>
+            <div className="stat-value">{inProgressCount}</div>
+            <div className="stat-change positive">Being processed</div>
           </div>
           <div className="stat-card">
-            <div className="stat-label">Completion Rate</div>
-            <div className="stat-value">98.5%</div>
-            <div className="stat-change positive">↑ Excellent</div>
+            <div className="stat-label">Completed</div>
+            <div className="stat-value">{completedCount}</div>
+            <div className="stat-change positive">✓ Done</div>
           </div>
         </div>
 
         <div className="card">
           <div className="card-header">
-            <h2 className="card-title">Pending Requests</h2>
+            <h2 className="card-title">Recent Requests</h2>
+            <button
+              className="btn btn-outline"
+              onClick={() => navigate('/admin/requests')}
+              style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
+            >
+              View All
+            </button>
           </div>
           <div className="table-container">
             <table>
               <thead>
                 <tr>
                   <th>Ticket ID</th>
-                  <th>Student</th>
+                  <th>Title</th>
                   <th>Service Type</th>
                   <th>Priority</th>
                   <th>Status</th>
@@ -80,22 +97,44 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#REQ-1001</td>
-                  <td>John Doe</td>
-                  <td>Course Registration</td>
-                  <td><span style={{ color: 'var(--danger)' }}>High</span></td>
-                  <td><span style={{ color: 'var(--primary)' }}>Pending</span></td>
-                  <td><a href="#">Review</a></td>
-                </tr>
-                <tr>
-                  <td>#REQ-1002</td>
-                  <td>Jane Smith</td>
-                  <td>Transcript Request</td>
-                  <td><span style={{ color: 'var(--warning)' }}>Medium</span></td>
-                  <td><span style={{ color: 'var(--primary)' }}>Pending</span></td>
-                  <td><a href="#">Review</a></td>
-                </tr>
+                {allRequests.slice(0, 5).map(request => (
+                  <tr key={request.id}>
+                    <td style={{ fontWeight: 'bold', color: 'var(--primary)' }}>{request.ticketId}</td>
+                    <td>{request.title}</td>
+                    <td>{request.serviceType}</td>
+                    <td>
+                      <span style={{
+                        padding: '0.25rem 0.75rem',
+                        borderRadius: '4px',
+                        background: request.priority === 'high' ? 'var(--danger)' : request.priority === 'medium' ? 'var(--warning)' : 'var(--success)',
+                        color: 'white',
+                        fontSize: '0.875rem',
+                      }}>
+                        {request.priority.charAt(0).toUpperCase() + request.priority.slice(1)}
+                      </span>
+                    </td>
+                    <td>
+                      <span style={{ color: request.status === 'completed' ? 'var(--success)' : request.status === 'in-progress' ? 'var(--warning)' : 'var(--primary)', fontWeight: '500' }}>
+                        {request.status.charAt(0).toUpperCase() + request.status.slice(1).replace('-', ' ')}
+                      </span>
+                    </td>
+                    <td>
+                      <button
+                        style={{
+                          color: 'var(--primary)',
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: '0.9rem',
+                          fontWeight: '600',
+                        }}
+                        onClick={() => navigate(`/admin/request-details/${request.id}`)}
+                      >
+                        Review
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
