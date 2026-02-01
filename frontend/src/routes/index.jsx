@@ -16,6 +16,7 @@ import AdminRequests from '../pages/admin/AllRequests'
 import AdminRequestDetails from '../pages/admin/RequestDetails'
 import AdminUsers from '../pages/admin/Users'
 import AdminAnalytics from '../pages/admin/Analytics'
+import AdminReports from '../pages/admin/Reports'
 
 // Protected Route Component
 function ProtectedRoute({ children, requiredRole = null }) {
@@ -148,6 +149,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <AdminAnalytics />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/admin/reports',
+    element: (
+      <ProtectedRoute>
+        <AdminReports />
       </ProtectedRoute>
     ),
   },
