@@ -12,6 +12,7 @@ export default function AdminDashboard() {
   const inProgressCount = allRequests.filter(r => r.status === 'in-progress').length
   const completedCount = allRequests.filter(r => r.status === 'completed').length
   const totalCount = allRequests.length
+  const overallSatisfaction = 4.6
 
   return (
     <div className="app-container">
@@ -47,32 +48,111 @@ export default function AdminDashboard() {
       <main className="main-content">
         <div className="page-header">
           <h1 className="greeting">Admin Dashboard</h1>
-          <p className="greeting-sub">Manage all service requests and users</p>
+          <p className="greeting-sub">System metrics and request management</p>
         </div>
 
+        {/* Key Metrics */}
         <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-label">Total Requests</div>
             <div className="stat-value">{totalCount}</div>
-            <div className="stat-change positive">All time</div>
+            <div className="stat-change positive">Lifetime</div>
           </div>
           <div className="stat-card">
             <div className="stat-label">Pending</div>
-            <div className="stat-value">{pendingCount}</div>
-            <div className="stat-change">{pendingCount > 0 ? 'Requires action' : 'None'}</div>
+            <div className="stat-value" style={{ color: '#ef4444' }}>{pendingCount}</div>
+            <div className="stat-change">{pendingCount > 0 ? '⚠ Action needed' : 'All clear'}</div>
           </div>
           <div className="stat-card">
             <div className="stat-label">In Progress</div>
-            <div className="stat-value">{inProgressCount}</div>
-            <div className="stat-change positive">Being processed</div>
+            <div className="stat-value" style={{ color: '#f59e0b' }}>{inProgressCount}</div>
+            <div className="stat-change positive">Currently processing</div>
           </div>
           <div className="stat-card">
             <div className="stat-label">Completed</div>
-            <div className="stat-value">{completedCount}</div>
-            <div className="stat-change positive">✓ Done</div>
+            <div className="stat-value" style={{ color: '#10b981' }}>{completedCount}</div>
+            <div className="stat-change positive">Success rate: {completedCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0}%</div>
           </div>
         </div>
 
+        {/* Quick Actions */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '1.5rem',
+          marginBottom: '2rem'
+        }}>
+          <div style={{
+            background: 'var(--bg-secondary)',
+            padding: '1.5rem',
+            borderRadius: '8px',
+            border: '1px solid var(--border-color)',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📋</div>
+            <h3 style={{ color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>View Requests</h3>
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate('/admin/requests')}
+              style={{ width: '100%' }}
+            >
+              Go to Queue
+            </button>
+          </div>
+          <div style={{
+            background: 'var(--bg-secondary)',
+            padding: '1.5rem',
+            borderRadius: '8px',
+            border: '1px solid var(--border-color)',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>👥</div>
+            <h3 style={{ color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>Manage Users</h3>
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate('/admin/users')}
+              style={{ width: '100%' }}
+            >
+              User List
+            </button>
+          </div>
+          <div style={{
+            background: 'var(--bg-secondary)',
+            padding: '1.5rem',
+            borderRadius: '8px',
+            border: '1px solid var(--border-color)',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📊</div>
+            <h3 style={{ color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>Analytics</h3>
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate('/admin/analytics')}
+              style={{ width: '100%' }}
+            >
+              View Trends
+            </button>
+          </div>
+          <div style={{
+            background: 'var(--bg-secondary)',
+            padding: '1.5rem',
+            borderRadius: '8px',
+            border: '1px solid var(--border-color)',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📄</div>
+            <h3 style={{ color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>Export Reports</h3>
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate('/admin/reports')}
+              style={{ width: '100%' }}
+            >
+              Generate
+            </button>
+          </div>
+        </div>
+
+        {/* Recent Requests */}
         <div className="card">
           <div className="card-header">
             <h2 className="card-title">Recent Requests</h2>
