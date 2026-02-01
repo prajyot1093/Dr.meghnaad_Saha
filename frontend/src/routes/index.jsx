@@ -11,8 +11,11 @@ import Profile from '../pages/student/Profile'
 import Courses from '../pages/student/Courses'
 import Payments from '../pages/student/Payments'
 import Electives from '../pages/student/Electives'
+import Notifications from '../pages/student/Notifications'
 import AdminRequests from '../pages/admin/AllRequests'
 import AdminRequestDetails from '../pages/admin/RequestDetails'
+import AdminUsers from '../pages/admin/Users'
+import AdminAnalytics from '../pages/admin/Analytics'
 
 // Protected Route Component
 function ProtectedRoute({ children, requiredRole = null }) {
@@ -101,6 +104,14 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: '/student/notifications',
+    element: (
+      <ProtectedRoute>
+        <Notifications />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: '/admin/dashboard',
     element: (
       <ProtectedRoute>
@@ -121,6 +132,22 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <AdminRequestDetails />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/admin/users',
+    element: (
+      <ProtectedRoute>
+        <AdminUsers />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/admin/analytics',
+    element: (
+      <ProtectedRoute>
+        <AdminAnalytics />
       </ProtectedRoute>
     ),
   },
